@@ -1,13 +1,25 @@
 <style>
-.articleTitle {
-  font-weight: bold
-}
+  #titleList{
+    font-size: 14px;
+    font-family: "Times New Roman";
+  }
+  #articlesDiv {
+   font-size: 19px;
+   font-family: "Times New Roman";
+  }
+  .articleTitle {
+    font-size: 28px;
+    font-weight: bold;
+    font-family: "Times New Roman";
+  }
 </style>
-
-<% @titles.each do |title| %>
-  <div><%= title %></div>
-<% end %>
-<% @articles.each_with_index do |article, index| %>
-  <div><strong><%= index + 1 %></strong></div>
+<div id='titleList'>
+  <% @titles.each do |title| %>
+    <div><%= title %></div>
+  <% end %>
+</div>  
+<br />
+<div id='articlesDiv'>
+<% @articles.each do |article| %>
   <div><%= article %></div>
 <% end %> 

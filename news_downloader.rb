@@ -18,13 +18,17 @@ class NewsDownloader < Sinatra::Base
     get_articles(WorldNewsUrl)
   end
   
+  get '/' do
+    erb :index
+  end
+  
 private
 
   def get_articles(url)
     @articles = []
     links = parse_link get_feed(url)
-    links.each do |link|
-      @articles << parse_article(link)
+    links.each_with_index do |link, index|
+      @articles << parse_article(link, index+1)
     end
     erb :article_list
   end
@@ -37,9 +41,9 @@ private
     feed.xpath("//item//link").collect(&:text)
   end
   
-  def parse_article(link)
+  def parse_article(link, index)
     html = Nokogiri::HTML URI.parse(link).read
-    title = html.css("meta[@property='og:title']").first.attributes['content'].to_s
+    title = html.css(".sectionColumns h1").first.text
     @titles ||= []
     @titles << title
     # location = html.css("div#articleInfo .location").first.text
@@ -47,7 +51,7 @@ private
     # published_at = html.css("div#articleInfo .timestamp").first.text
     article_info = html.css("div.articleInfo").to_s
     content = html.css("span#articleText").first.to_s
-    "<div class='articleTitle'>#{title}</div>" + 
+    "<div class=articleTitle>#{index}. #{title}</div>" + 
     article_info + 
     content
   end

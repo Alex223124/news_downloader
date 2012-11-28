@@ -11,27 +11,26 @@ class NewsDownloader < Sinatra::Base
   WorldNewsUrl = 'http://feeds.reuters.com/reuters/UKWorldNews/'
   
   get '/top_news' do
-    @articles = []
-    links = parse_link get_feed(TopNewsUrl)
-    links.each do |link|
-      @articles << parse_article(link)
-    end
-    erb :article_list
+    get_articles(TopNewsUrl)
   end
   
   get '/world_news' do
+    get_articles(WorldNewsUrl)
+  end
+  
+private
+
+  def get_articles(url)
     @articles = []
-    links = parse_link get_feed(WorldNewsUrl)
+    links = parse_link get_feed(url)
     links.each do |link|
       @articles << parse_article(link)
     end
     erb :article_list
   end
   
-private
-  
   def get_feed(url)
-    Nokogiri::XML URI.parse('http://feeds.feedburner.com/reuters/topNews/').read
+    Nokogiri::XML URI.parse(url).read
   end
   
   def parse_link(feed)

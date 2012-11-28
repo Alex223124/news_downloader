@@ -20,11 +20,12 @@ class NewsDownloader < Sinatra::Base
   end
   
   get '/world_news' do
-    articles = []
-    links = parse_link get_feed(TopNewsUrl)
+    @articles = []
+    links = parse_link get_feed(WorldNewsUrl)
     links.each do |link|
-      articles << parse_article(link)
+      @articles << parse_article(link)
     end
+    erb :article_list
   end
   
 private

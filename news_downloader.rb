@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'nokogiri'
 require 'open-uri'
+require 'json'
 unless ENV['RACK_ENV'] == 'production'
   require 'debugger'
 end
@@ -9,6 +10,7 @@ class NewsDownloader < Sinatra::Base
   
   TopNewsUrl = 'http://feeds.feedburner.com/reuters/topNews/'
   WorldNewsUrl = 'http://feeds.reuters.com/reuters/UKWorldNews/'
+  ImageUrl = 'http://pugme.herokuapp.com/random'
   
   get '/top_news' do
     get_articles(TopNewsUrl)
@@ -19,6 +21,7 @@ class NewsDownloader < Sinatra::Base
   end
   
   get '/' do
+    @image = get_image_url
     erb :index
   end
   
@@ -35,6 +38,10 @@ private
   
   def get_feed(url)
     Nokogiri::XML URI.parse(url).read
+  end
+  
+  def get_image_url
+    JSON.parse(URI.parse(ImageUrl).read)['pug']
   end
   
   def parse_link(feed)

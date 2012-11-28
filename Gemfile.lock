@@ -19,6 +19,7 @@ GEM
       rubyzip
     heroku-api (0.3.7)
       excon (~> 0.16.10)
+    json (1.7.5)
     launchy (2.1.2)
       addressable (~> 2.3)
     mime-types (1.19)
@@ -47,6 +48,7 @@ PLATFORMS
 DEPENDENCIES
   debugger
   heroku
+  json
   nokogiri
   sanitize
   shotgun

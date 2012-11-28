@@ -1,0 +1,13 @@
+<style>
+.articleTitle {
+  font-weight: bold
+}
+</style>
+
+<% @titles.each do |title| %>
+  <div><%= title %></div>
+<% end %>
+<% @articles.each_with_index do |article, index| %>
+  <div><strong><%= index + 1 %></strong></div>
+  <div><%= article %></div>
+<% end %> 

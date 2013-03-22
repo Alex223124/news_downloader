@@ -32,6 +32,7 @@ private
     links = parse_link get_feed(url)
     links.each_with_index do |link, index|
       @articles << parse_article(link, index+1)
+      break if @articles.length == 10
     end
     erb :article_list
   end
